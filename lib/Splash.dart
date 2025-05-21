@@ -14,7 +14,6 @@ class Splash extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Atas: ikon bintang dan toggle
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
@@ -22,8 +21,6 @@ class Splash extends StatelessWidget {
                 Icon(Icons.toggle_on, size: 32, color: Colors.deepPurple),
               ],
             ),
-
-            // Tengah: Lottie animasi dan teks
             Column(
               children: [
                 Lottie.asset(
@@ -53,8 +50,6 @@ class Splash extends StatelessWidget {
                 ),
               ],
             ),
-
-            // Bawah: Tombol
             Row(
               children: [
                 Expanded(

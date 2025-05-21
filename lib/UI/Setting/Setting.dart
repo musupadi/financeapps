@@ -12,7 +12,7 @@ class Setting extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+        padding: const EdgeInsets.only(left: 24,right: 24,top: 40),
         child: Column(
           children: [
             HeaderCard(
@@ -24,11 +24,10 @@ class Setting extends StatelessWidget {
               },
             ),
 
-            // 📜 SCROLLABLE SETTINGS
             Expanded(
               child: ListView(
                 children: [
-                  // 🧩 Lottie Icon
+
                   Center(
                     child: SizedBox(
                       height: 160,
@@ -41,14 +40,14 @@ class Setting extends StatelessWidget {
 
                   const SizedBox(height: 32),
 
-                  // 🚪 Navigation Back
+
                   _SettingTile(
                     icon: Icons.logout,
                     label: 'Back to Splash',
                     onTap: () => toSplash(context, false),
                   ),
 
-                  // ⚙️ Dummy Settings
+
                   const _SettingTile(icon: Icons.language, label: 'Language'),
                   const _SettingTile(icon: Icons.notifications, label: 'Notification Settings'),
                   const _SettingTile(icon: Icons.lock, label: 'Privacy & Security'),

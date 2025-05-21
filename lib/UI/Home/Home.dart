@@ -13,94 +13,109 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => HomeBloc()..add(LoadHomeData()),
-      child: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FF),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HeaderCard(
-                name: 'Supriyadi',
-                onAction: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is not implemented yet')),
-                  );
+      child: const HomeView(),
+    );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FF),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 40),
+        child: Column(
+          children: [
+            HeaderCard(
+              name: 'Supriyadi',
+              onAction: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('This is not implemented yet')),
+                );
+              },
+            ),
+            Expanded(
+              child: BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state is HomeLoaded) {
+                    return ListView(
+                      children: [
+                        const Text('This Month Summary',
+                            style: TextStyle(color: Colors.grey, fontSize: 14)),
+                        const SizedBox(height: 4),
+                        Text(
+                          '\$ ${state.monthlyBalance.toStringAsFixed(2)}',
+                          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Today ${DateTime.now().day} ${_monthName(DateTime.now().month)} ${DateTime.now().year}',
+                          style: const TextStyle(color: Colors.grey, fontSize: 14),
+                        ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          height: 160,
+                          child: Lottie.asset('assets/lottie/finance3.json', fit: BoxFit.contain),
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex:1,
+                              child: _HomeInfoCard(
+                                title: 'Upcoming Bill',
+                                subtitle: 'Electricity - \$${state.billAmount.toStringAsFixed(2)}',
+                                color: Colors.orange,
+                                icon: Icons.flash_on,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              flex:1,
+                              child: _HomeInfoCard(
+                                title: 'Goal Savings',
+                                subtitle: 'Savings Goal\n${state.goalPercent.toInt()}% reached',
+                                color: Colors.blue,
+                                icon: Icons.savings,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 32),
+                        const Text('Quick Info',
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                        const SizedBox(height: 12),
+                        const _QuickInfoItem(
+                          icon: Icons.card_giftcard,
+                          text: 'You have 3 active promos!',
+                        ),
+                        const _QuickInfoItem(
+                          icon: Icons.tips_and_updates,
+                          text: 'Tip: Set budgets for categories to avoid overspending.',
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                 },
               ),
-              Expanded(
-                child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    if (state is HomeLoaded) {
-                      return ListView(
-                        children: [
-                          const Text(
-                            'This Month Summary',
-                            style: TextStyle(color: Colors.grey, fontSize: 14),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '\$ ${state.monthlyBalance.toStringAsFixed(2)}',
-                            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 32),
-                          SizedBox(
-                            height: 160,
-                            child: Lottie.asset('assets/lottie/finance3.json', fit: BoxFit.contain),
-                          ),
-                          const SizedBox(height: 32),
-
-                          // Card Section
-                          Row(
-                            children: [
-                              Expanded(
-                                child: _HomeInfoCard(
-                                  title: 'Upcoming Bill',
-                                  subtitle: 'Electricity - \$${state.billAmount.toStringAsFixed(2)}',
-                                  color: Colors.orange,
-                                  icon: Icons.flash_on,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: _HomeInfoCard(
-                                  title: 'Goal Savings',
-                                  subtitle: '${state.goalPercent.toInt()}% reached',
-                                  color: Colors.blue,
-                                  icon: Icons.savings,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 32),
-
-                          // Quick Info
-                          const Text(
-                            'Quick Info',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(height: 12),
-                          const _QuickInfoItem(
-                            icon: Icons.card_giftcard,
-                            text: 'You have 3 active promos!',
-                          ),
-                          const _QuickInfoItem(
-                            icon: Icons.tips_and_updates,
-                            text: 'Tip: Set budgets for categories to avoid overspending.',
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  static String _monthName(int month) {
+    const monthNames = [
+      '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return monthNames[month];
   }
 }
 
@@ -119,50 +134,56 @@ class _HomeInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight( // 🔑 auto tinggi sesuai isi
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.08),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withOpacity(0.2)),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center, // 🔄 rata tengah vertikal
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: color,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 13,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+    return Container(
+      width: double.maxFinite,
+      height: 165,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundColor: color.withOpacity(0.1),
+            radius: 24,
+            child: Icon(icon, color: color, size: 24),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            subtitle,
+            style: const TextStyle(
+              color: Colors.black87,
+              fontSize: 12,
+            ),
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }
 }
+
 
 
 class _QuickInfoItem extends StatelessWidget {
