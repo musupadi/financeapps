@@ -6,7 +6,6 @@ A modern and responsive personal finance app built using **Flutter** with **BLoC
 
 - ✅ Splash & Onboarding Page
 - ✅ Home Dashboard with Monthly Summary
-- ✅ Transaction Page with currency switcher (USD / EURO)
 - ✅ Wallet Page with Income/Expense breakdown
 - ✅ Settings Page with dummy navigation & back to Splash
 - ✅ Fully responsive layout
@@ -14,6 +13,7 @@ A modern and responsive personal finance app built using **Flutter** with **BLoC
 - ✅ Modular folder structure
 - ✅ Lottie animation integration
 - ✅ Randomized dummy data (transactions, income, expenses)
+- ✅ Search and Filter item
 
 ---
 
