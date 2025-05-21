@@ -1,16 +1,20 @@
-# financeapps
+# Finance App
 
-A new Flutter project.
+A modern and responsive personal finance app built using **Flutter** with **BLoC state management**, Lottie animations, and a clean modular architecture.
 
-## Getting Started
+##  Features
 
-This project is a starting point for a Flutter application.
+- ✅ Splash & Onboarding Page
+- ✅ Home Dashboard with Monthly Summary
+- ✅ Transaction Page with currency switcher (USD / EURO)
+- ✅ Wallet Page with Income/Expense breakdown
+- ✅ Settings Page with dummy navigation & back to Splash
+- ✅ Fully responsive layout
+- ✅ BLoC state management
+- ✅ Modular folder structure
+- ✅ Lottie animation integration
+- ✅ Randomized dummy data (transactions, income, expenses)
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
